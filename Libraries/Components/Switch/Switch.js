@@ -56,10 +56,14 @@ var Switch = React.createClass({
      */
     onValueChange: PropTypes.func,
     /**
+     * Change made by Saurabh to fix the Bluetooth Keyboard issue
+     * Callback that is called when the switch is clicked.
+     */
+    onClick: PropTypes.func,
+    /**
      * Used to locate this view in end-to-end tests.
      */
     testID: PropTypes.string,
-
     /**
      * Border color on iOS and background color on Android when the switch is turned off.
      */
@@ -94,6 +98,14 @@ var Switch = React.createClass({
     this.props.onChange && this.props.onChange(event);
     this.props.onValueChange && this.props.onValueChange(event.nativeEvent.value);
   },
+  _onClick: function(event: Object) {
+    if (Platform.OS === 'android') {
+      if (!this.props.disabled)
+        this.props.onClick && this.props.onClick(event);
+      }
+    } else {
+    }
+  },
 
   render: function() {
     var props = {...this.props};
@@ -112,6 +124,7 @@ var Switch = React.createClass({
         {...props}
         ref={(ref) => { this._rctSwitch = ref; }}
         onChange={this._onChange}
+        onClick={this._onClick}
       />
     );
   },
@@ -128,6 +141,7 @@ if (Platform.OS === 'android') {
   var RCTSwitch = requireNativeComponent('AndroidSwitch', Switch, {
     nativeOnly: {
       onChange: true,
+      onClick: true,
       on: true,
       enabled: true,
       trackTintColor: true,

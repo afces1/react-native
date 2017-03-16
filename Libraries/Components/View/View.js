@@ -506,6 +506,12 @@ const View = React.createClass({
      * @platform android
      */
     needsOffscreenAlphaCompositing: PropTypes.bool,
+
+    /**
+     * Change made by Saurabh to fix the Bluetooth Keyboard issue
+     * Callback that is called when a View is clicked.
+     */
+    onClick: PropTypes.func,
   },
 
   contextTypes: {

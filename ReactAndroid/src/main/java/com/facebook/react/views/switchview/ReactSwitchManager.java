@@ -82,6 +82,17 @@ public class ReactSwitchManager extends SimpleViewManager<ReactSwitch> {
         }
       };
 
+  private static final CompoundButton.OnClickListener ON_CLICK_LISTENER =
+      new CompoundButton.OnClickedListener() {
+        @Override
+        public void onClick(CompoundButton buttonView) {
+          ReactContext reactContext = (ReactContext) buttonView.getContext();
+          reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher().dispatchEvent(
+              new ReactSwitchClickEvent(
+                  buttonView.getId());
+        }
+      };
+
   @Override
   public String getName() {
     return REACT_CLASS;
@@ -114,8 +125,10 @@ public class ReactSwitchManager extends SimpleViewManager<ReactSwitch> {
     // we set the checked change listener to null and then restore it so that we don't fire an
     // onChange event to JS when JS itself is updating the value of the switch
     view.setOnCheckedChangeListener(null);
+    view.setOnClickListener(null);
     view.setOn(on);
     view.setOnCheckedChangeListener(ON_CHECKED_CHANGE_LISTENER);
+    view.setOnClickListener(ON_CLICK_LISTENER);
   }
 
   @ReactProp(name = "thumbTintColor", customType = "Color")
@@ -139,5 +152,6 @@ public class ReactSwitchManager extends SimpleViewManager<ReactSwitch> {
   @Override
   protected void addEventEmitters(final ThemedReactContext reactContext, final ReactSwitch view) {
     view.setOnCheckedChangeListener(ON_CHECKED_CHANGE_LISTENER);
+    view.setOnClickListener(ON_CLICK_LISTENER);
   }
 }

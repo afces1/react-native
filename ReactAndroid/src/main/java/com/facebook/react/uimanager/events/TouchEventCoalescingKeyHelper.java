@@ -61,7 +61,8 @@ public class TouchEventCoalescingKeyHelper {
   public void incrementCoalescingKey(long downTime) {
     int currentValue = mDownTimeToCoalescingKey.get((int) downTime, -1);
     if (currentValue == -1) {
-      throw new RuntimeException("Tried to increment non-existent cookie");
+      //throw new RuntimeException("Tried to increment non-existent cookie");
+      return;
     }
     mDownTimeToCoalescingKey.put((int) downTime, currentValue + 1);
   }
@@ -72,7 +73,8 @@ public class TouchEventCoalescingKeyHelper {
   public short getCoalescingKey(long downTime) {
     int currentValue = mDownTimeToCoalescingKey.get((int) downTime, -1);
     if (currentValue == -1) {
-      throw new RuntimeException("Tried to get non-existent cookie");
+      //throw new RuntimeException("Tried to get non-existent cookie");
+      return ((short) (0xffff));
     }
     return ((short) (0xffff & currentValue));
   }

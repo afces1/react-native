@@ -40,6 +40,11 @@ import com.facebook.react.uimanager.events.TouchEventType;
                 "phasedRegistrationNames",
                 MapBuilder.of("bubbled", "onSelect", "captured", "onSelectCapture")))
         .put(
+            "topClick",
+            MapBuilder.of(
+                "phasedRegistrationNames",
+                MapBuilder.of("bubbled", "onClick", "captured", "onClickCapture"))) //Change made by Saurabh to fix the Bluetooth Keyboard issue
+        .put(
             TouchEventType.START.getJSEventName(),
             MapBuilder.of(
                 "phasedRegistrationNames",

@@ -345,6 +345,11 @@ const TextInput = React.createClass({
      */
     onFocus: PropTypes.func,
     /**
+     * Change made by Saurabh to fix the Bluetooth Keyboard issue
+     * Callback that is called when the text input is clicked.
+     */
+    onClick: PropTypes.func,
+    /**
      * Callback that is called when the text input's text changes.
      */
     onChange: PropTypes.func,
@@ -653,6 +658,7 @@ const TextInput = React.createClass({
           ref={this._setNativeRef}
           {...props}
           onFocus={this._onFocus}
+          onClick={this._onClick}
           onBlur={this._onBlur}
           onChange={this._onChange}
           onSelectionChange={this._onSelectionChange}
@@ -679,6 +685,7 @@ const TextInput = React.createClass({
           {...props}
           children={children}
           onFocus={this._onFocus}
+          onClick={this._onClick}
           onBlur={this._onBlur}
           onChange={this._onChange}
           onContentSizeChange={this.props.onContentSizeChange}
@@ -731,6 +738,7 @@ const TextInput = React.createClass({
         {...props}
         mostRecentEventCount={0}
         onFocus={this._onFocus}
+        onClick={this._onClick}
         onBlur={this._onBlur}
         onChange={this._onChange}
         onSelectionChange={this._onSelectionChange}
@@ -761,6 +769,12 @@ const TextInput = React.createClass({
 
     if (this.props.selectionState) {
       this.props.selectionState.focus();
+    }
+  },
+
+  _onClick: function(event: Event) {
+    if (this.props.editable || this.props.editable === undefined) {
+      this.focus();
     }
   },
 

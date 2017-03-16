@@ -22,6 +22,8 @@ import com.facebook.react.touch.ReactInterceptingViewGroup;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.annotations.ReactPropGroup;
 import com.facebook.react.uimanager.annotations.ReactPropertyHolder;
+import com.facebook.react.uimanager.events.EventDispatcher;
+import com.facebook.react.uimanager.events.ReactViewClickEvent;
 
 /**
  * Class responsible for knowing how to create and update catalyst Views of a given type. It is also
@@ -95,6 +97,19 @@ public abstract class ViewManager<T extends View, C extends ReactShadowNode>
    * to JS (e.g. scroll events).
    */
   protected void addEventEmitters(ThemedReactContext reactContext, T view) {
+      view.setOnClickListener(
+          new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+              EventDispatcher eventDispatcher =
+                      reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
+              eventDispatcher.dispatchEvent(
+                      new ReactViewClickEvent(
+                              view.getId()));
+            }
+      });
   }
 
   /**

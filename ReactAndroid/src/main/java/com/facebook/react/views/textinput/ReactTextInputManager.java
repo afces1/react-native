@@ -136,6 +136,11 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
             MapBuilder.of(
                 "phasedRegistrationNames",
                 MapBuilder.of("bubbled", "onBlur", "captured", "onBlurCapture")))
+        .put(
+            "topClick",
+            MapBuilder.of(
+                    "phasedRegistrationNames",
+                    MapBuilder.of("bubbled", "onClick", "captured", "onClickCapture")))//Change made by Saurabh to fix the Bluetooth Keyboard issue
         .build();
   }
 
@@ -698,6 +703,18 @@ public class ReactTextInputManager extends BaseViewManager<ReactEditText, Layout
             }
 
             return true;
+          }
+        });
+    //Change made by Saurabh to fix the Bluetooth Keyboard issue
+    editText.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            EventDispatcher eventDispatcher =
+                    reactContext.getNativeModule(UIManagerModule.class).getEventDispatcher();
+            eventDispatcher.dispatchEvent(
+                    new ReactTextClickEvent(
+                            editText.getId()));
           }
         });
   }
